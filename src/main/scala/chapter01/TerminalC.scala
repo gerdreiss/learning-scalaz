@@ -6,6 +6,8 @@ import scala.language.higherKinds
 
 object TerminalC {
 
+  // TERMINAL
+
   trait Terminal[C[_]] {
     def read: C[String]
     def write(t: String): C[Unit]
@@ -23,6 +25,7 @@ object TerminalC {
     override def write(t: String): Future[Unit] = Future { "Async write" }
   }
 
+  // EXECUTION
 
   trait Execution[C[_]] {
     def doAndThen[A, B](c: C[A])(f: A => C[B]): C[B]
@@ -40,16 +43,12 @@ object TerminalC {
   //
   // can be refactored to this, to enable a for comprehension over the execution
   object Execution {
-
     implicit class Ops[A, C[_]](c: C[A]) {
-      def flatMap[B](f: A => C[B])(implicit e: Execution[C]): C[B] =
-        e.doAndThen(c)(f)
-
-      def map[B](f: A => B)(implicit e: Execution[C]): C[B] =
-        e.doAndThen(c)(f andThen e.create)
+      def flatMap[B](f: A => C[B])(implicit e: Execution[C]): C[B] = e.doAndThen(c)(f)
+      def map[B](f: A => B)(implicit e: Execution[C]): C[B] = flatMap(f andThen e.create)
     }
-
   }
+
 
   // here we use the implicit flatMap and map functions
   //def echo[C[_]](implicit t: Terminal[C], e: Execution[C]): C[String] =
