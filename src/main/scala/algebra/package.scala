@@ -11,6 +11,7 @@ package object algebra {
   }
 
   final case class MachineNode(id: String)
+
   trait Machines[F[_]] {
     def getTime: F[Instant]
     def getManaged: F[NonEmptyList[MachineNode]]

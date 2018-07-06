@@ -11,7 +11,9 @@ scalacOptions in ThisBuild ++= Seq(
 
 libraryDependencies ++= Seq(
   "com.github.mpilquist" %% "simulacrum"     % "0.12.0",
-  "org.scalaz"           %% "scalaz-core"    % "7.2.22"
+  "org.scalaz"           %% "scalaz-core"    % "7.2.22",
+  "org.scalactic"        %% "scalactic"      % "3.0.5",
+  "org.scalatest"        %% "scalatest"      % "3.0.5"   % "test"
 )
 
 addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.6")
