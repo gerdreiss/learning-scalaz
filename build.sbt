@@ -13,6 +13,7 @@ libraryDependencies ++= Seq(
   "com.github.mpilquist" %% "simulacrum"     % "0.12.0",
   "org.scalaz"           %% "scalaz-core"    % "7.2.22",
   "org.scalactic"        %% "scalactic"      % "3.0.5",
+  "eu.timepit"           %% "refined-scalaz" % "0.8.7",
   "org.scalatest"        %% "scalatest"      % "3.0.5"   % "test"
 )
 
