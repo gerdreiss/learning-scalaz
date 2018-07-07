@@ -1,4 +1,4 @@
-package chapter01
+package fpmortals.chapter01
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration

@@ -1,10 +1,12 @@
+package fpmortals
+
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 import scala.concurrent.duration._
 import scalaz._
 import Scalaz._
-import algebra._
+import fpmortals.algebra._
 
 import scala.language.higherKinds
 

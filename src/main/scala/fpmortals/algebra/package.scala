@@ -1,3 +1,5 @@
+package fpmortals
+
 import scala.language.higherKinds
 
 package object algebra {

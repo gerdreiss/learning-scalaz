@@ -1,4 +1,6 @@
-import logic.WorldView
+package fpmortals
+
+import fpmortals.logic.WorldView
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestSpecs extends FlatSpec with Matchers {

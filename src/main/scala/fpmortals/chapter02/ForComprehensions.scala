@@ -1,4 +1,4 @@
-package chapter02
+package fpmortals.chapter02
 
 import scala.concurrent.{Await, Future}
 import scala.concurrent.ExecutionContext.Implicits._

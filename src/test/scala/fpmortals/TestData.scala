@@ -1,7 +1,9 @@
+package fpmortals
+
 import java.time.{Instant, ZonedDateTime}
 
-import algebra._
-import logic._
+import fpmortals.algebra._
+import fpmortals.logic._
 import scalaz.Scalaz._
 import scalaz._
 
