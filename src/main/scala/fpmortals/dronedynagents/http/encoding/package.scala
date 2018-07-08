@@ -1,6 +1,8 @@
 package fpmortals.dronedynagents.http
 
-import fpmortals.dronedynagents.http.oauth2.client.api.AuthRequest
+import fpmortals.dronedynagents.http.encoding.AuthRequest.stringify
+import fpmortals.dronedynagents.http.encoding.UrlEncodedWriter.ops
+import fpmortals.dronedynagents.http.oauth2.client.api._
 
 package object encoding {
 
@@ -20,6 +22,10 @@ package object encoding {
     def toUrlEncoded(a: A): String
   }
 
+  object UrlQueryWriter {
+    implicit val authRequest: UrlQueryWriter[AuthRequest] = AuthRequest.query
+  }
+
   object UrlEncodedWriter {
     import ops._
 
@@ -28,13 +34,17 @@ package object encoding {
     implicit val stringySeq: UrlEncodedWriter[Seq[(String, String)]] = _.map {
       case (k, v) => s"${k.toUrlEncoded}=${v.toUrlEncoded}"
     } mkString "&"
-    implicit val url: UrlEncodedWriter[String Refined Url] = s => java.net.URLEncoder.encode(s.value, "UTF-8")
+
+    implicit val url: UrlEncodedWriter[String Refined Url] = { s =>
+      java.net.URLEncoder.encode(s.value, "UTF-8")
+    }
   }
 
   import UrlEncodedWriter.ops._
 
   object AuthRequest {
-    private def stringify[T: UrlEncodedWriter](t: T) = java.net.URLEncoder.encode(t.toUrlEncoded, "UTF-8")
+    private def stringify[T: UrlEncodedWriter](t: T) =
+      java.net.URLEncoder.encode(t.toUrlEncoded, "UTF-8")
 
     implicit val query: UrlQueryWriter[AuthRequest] = { a =>
       UrlQuery(List(
@@ -46,14 +56,27 @@ package object encoding {
         "access_type"   -> stringify(a.access_type)
       ))
     }
-
-    object AccessRequest {
-
-    }
-
-    object RefreshRequest {
-
+  }
+  object AccessRequest {
+    implicit val encoded: UrlEncodedWriter[AccessRequest] = { a =>
+      Seq(
+        "code"          -> a.code.toUrlEncoded,
+        "redirect_uri"  -> a.redirect_uri.toUrlEncoded,
+        "client_id"     -> a.client_id.toUrlEncoded,
+        "client_secret" -> a.client_secret.toUrlEncoded,
+        "scope"         -> a.scope.toUrlEncoded,
+        "grant_type"    -> a.grant_type.toUrlEncoded
+      ).toUrlEncoded
     }
   }
-
+  object RefreshRequest {
+    implicit val encoded: UrlEncodedWriter[RefreshRequest] = { r =>
+      Seq(
+        "client_secret" -> r.client_secret.toUrlEncoded,
+        "refresh_token" -> r.refresh_token.toUrlEncoded,
+        "client_id"     -> r.client_id.toUrlEncoded,
+        "grant_type"    -> r.grant_type.toUrlEncoded
+      ).toUrlEncoded
+    }
+  }
 }
