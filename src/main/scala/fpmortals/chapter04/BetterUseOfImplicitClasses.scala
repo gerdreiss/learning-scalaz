@@ -16,5 +16,10 @@ object BetterUseOfImplicitClasses extends App {
     def sin: Double = java.lang.Math.sin(x)
   }
 
+  implicit final class StringOps(val s: String) extends AnyVal {
+    def sortAlphanumeric: String = s.toCharArray.filter(_.isLetterOrDigit).sorted.mkString
+  }
+Numeric
   println(1.0.sin)
+  println("Let's see if this works :/ yay!!!1!!".sortAlphanumeric)
 }
