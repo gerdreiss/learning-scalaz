@@ -1,17 +1,15 @@
 package fpmortals.dronedynagents.http
 
-import fpmortals.dronedynagents.http.encoding.AuthRequest.stringify
-import fpmortals.dronedynagents.http.encoding.UrlEncodedWriter.ops
-import fpmortals.dronedynagents.http.oauth2.client.api._
 
 package object encoding {
 
   import eu.timepit.refined.api.Refined
   import eu.timepit.refined.string.Url
+  import fpmortals.dronedynagents.http.oauth2.client.api._
   import simulacrum.typeclass
 
   final case class UrlQuery(params: List[(String, String)]) {
-    def forUrl(url: String Refined Url): String Refined Url = ???
+    def forUrl(url: String Refined Url): String Refined Url = url
   }
 
   @typeclass trait UrlQueryWriter[A] {
