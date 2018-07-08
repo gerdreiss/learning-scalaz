@@ -1,6 +1,6 @@
-package fpmortals
+package fpmortals.dronedynagents
 
-import fpmortals.logic.WorldView
+import logic.WorldView
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestSpecs extends FlatSpec with Matchers {

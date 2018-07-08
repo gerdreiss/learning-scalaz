@@ -1,11 +1,11 @@
 package fpmortals.chapter02
 
-import scala.concurrent.{Await, Future}
-import scala.concurrent.ExecutionContext.Implicits._
 import scalaz._
 import Scalaz._
 
+import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 object ForComprehensions extends App {
 

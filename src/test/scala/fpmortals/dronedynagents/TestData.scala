@@ -1,11 +1,11 @@
-package fpmortals
+package fpmortals.dronedynagents
 
 import java.time.{Instant, ZonedDateTime}
 
-import fpmortals.algebra._
-import fpmortals.logic._
-import scalaz.Scalaz._
+import algebra._
+import logic._
 import scalaz._
+import Scalaz._
 
 object Data {
   val node1 = MachineNode("1243d1af-828f-4ba3-9fc0-a19d86852b5a")

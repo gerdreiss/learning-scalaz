@@ -1,13 +1,13 @@
-package fpmortals
+package fpmortals.dronedynagents
 
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
-import scala.concurrent.duration._
+import algebra._
 import scalaz._
 import Scalaz._
-import fpmortals.algebra._
 
+import scala.concurrent.duration._
 import scala.language.higherKinds
 
 
