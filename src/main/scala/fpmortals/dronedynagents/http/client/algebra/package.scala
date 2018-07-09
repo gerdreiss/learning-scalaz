@@ -10,7 +10,7 @@ package object algebra {
   import eu.timepit.refined.string.Url
   import spray.json.JsonReader
 
-  type HttpHeader = List[(String, String)]
+  type HttpHeader = (String, String)
   type HttpResponseHeader = List[(String, String)]
 
   final case class Response[T](header: HttpResponseHeader, body: T)
@@ -22,7 +22,7 @@ package object algebra {
       headers: List[HttpHeader] = Nil
     ): F[Response[B]]
 
-    def postUrlencoded[A: UrlEncodedWriter, B: JsonReader](
+    def postUrlEncoded[A: UrlEncodedWriter, B: JsonReader](
       uri: String Refined Url,
       payload: A,
       headers: List[HttpHeader] = Nil

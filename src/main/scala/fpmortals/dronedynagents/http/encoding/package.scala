@@ -12,16 +12,12 @@ package object encoding {
     def forUrl(url: String Refined Url): String Refined Url = url
   }
 
-  @typeclass trait UrlQueryWriter[A] {
-    def toUrlQuery(a: A): UrlQuery
-  }
-
   @typeclass trait UrlEncodedWriter[A] {
     def toUrlEncoded(a: A): String
   }
 
-  object UrlQueryWriter {
-    implicit val authRequest: UrlQueryWriter[AuthRequest] = AuthRequest.query
+  @typeclass trait UrlQueryWriter[A] {
+    def toUrlQuery(a: A): UrlQuery
   }
 
   object UrlEncodedWriter {
@@ -40,11 +36,11 @@ package object encoding {
 
   import UrlEncodedWriter.ops._
 
-  object AuthRequest {
-    private def stringify[T: UrlEncodedWriter](t: T) =
-      java.net.URLEncoder.encode(t.toUrlEncoded, "UTF-8")
+  private def stringify[T: UrlEncodedWriter](t: T) =
+    java.net.URLEncoder.encode(t.toUrlEncoded, "UTF-8")
 
-    implicit val query: UrlQueryWriter[AuthRequest] = { a =>
+  object UrlQueryWriter {
+    implicit val authRequest: UrlQueryWriter[AuthRequest] = { a =>
       UrlQuery(List(
         "redirect_uri"  -> stringify(a.redirect_uri),
         "scope"         -> stringify(a.scope),

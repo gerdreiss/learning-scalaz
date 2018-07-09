@@ -11,6 +11,9 @@ package object client {
   import client.api._
   import fpmortals.dronedynagents.http.client.algebra.JsonHttpClient
   import fpmortals.dronedynagents.http.encoding.UrlQueryWriter.ops._
+  import fpmortals.dronedynagents.http.encoding.UrlEncodedWriter.ops._
+  import fpmortals.dronedynagents.http.encoding.AccessRequest._
+  import fpmortals.dronedynagents.http.encoding.RefreshRequest._
   import scalaz._
   import Scalaz._
   import spray.json.ImplicitDerivedFormats._
@@ -31,7 +34,7 @@ package object client {
     def access(code: CodeToken): F[(RefreshToken, BearerToken)] =
       for {
         request <- AccessRequest(code.token, code.redirect_uri, config.clientId, config.clientSecret).pure[F]
-        response <- client.postUrlencoded[AccessRequest, AccessResponse](config.access, request)
+        response <- client.postUrlEncoded[AccessRequest, AccessResponse](config.access, request)
         time <- clock.now
         msg = response.body
         expires = time.plus(msg.expires_in, ChronoUnit.SECONDS)
@@ -42,7 +45,7 @@ package object client {
     def bearer(refresh: RefreshToken): F[BearerToken] =
       for {
         request <- RefreshRequest(config.clientSecret, refresh.token, config.clientId).pure[F]
-        response <- client.postUrlencoded[RefreshRequest, RefreshResponse](config.refresh, request)
+        response <- client.postUrlEncoded[RefreshRequest, RefreshResponse](config.refresh, request)
         time <- clock.now
         msg = response.body
         expires = time.plus(msg.expires_in, ChronoUnit.SECONDS)
