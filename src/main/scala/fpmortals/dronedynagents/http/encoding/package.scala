@@ -28,10 +28,11 @@ package object encoding {
     implicit val stringySeq: UrlEncodedWriter[Seq[(String, String)]] = _.map {
       case (k, v) => s"${k.toUrlEncoded}=${v.toUrlEncoded}"
     } mkString "&"
-
     implicit val url: UrlEncodedWriter[String Refined Url] = { s =>
       java.net.URLEncoder.encode(s.value, "UTF-8")
     }
+    implicit val accessRequest: UrlEncodedWriter[AccessRequest] = AccessRequest.encoded
+    implicit val refreshRequest: UrlEncodedWriter[RefreshRequest] = RefreshRequest.encoded
   }
 
   import UrlEncodedWriter.ops._

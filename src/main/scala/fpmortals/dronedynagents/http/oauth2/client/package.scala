@@ -12,8 +12,6 @@ package object client {
   import fpmortals.dronedynagents.http.client.algebra.JsonHttpClient
   import fpmortals.dronedynagents.http.encoding.UrlQueryWriter.ops._
   import fpmortals.dronedynagents.http.encoding.UrlEncodedWriter.ops._
-  import fpmortals.dronedynagents.http.encoding.AccessRequest._
-  import fpmortals.dronedynagents.http.encoding.RefreshRequest._
   import scalaz._
   import Scalaz._
   import spray.json.ImplicitDerivedFormats._
