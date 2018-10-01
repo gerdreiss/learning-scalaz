@@ -5,17 +5,19 @@ version := "0.1"
 scalaVersion in ThisBuild := "2.12.6"
 scalacOptions in ThisBuild ++= Seq(
   "-language:_",
-  "-Ypartial-unification",
-  "-Xfatal-warnings"
+  "-Ypartial-unification"
 )
 
 libraryDependencies ++= Seq(
-  "com.github.mpilquist" %% "simulacrum"            % "0.12.0",
-  "org.scalaz"           %% "scalaz-core"           % "7.2.22",
-  "org.scalactic"        %% "scalactic"             % "3.0.5",
-  "eu.timepit"           %% "refined-scalaz"        % "0.8.7",
-  "xyz.driver"           %% "spray-json-derivation" % "0.4.1",
-  "org.scalatest"        %% "scalatest"             % "3.0.5"   % "test"
+  "com.github.mpilquist" %% "simulacrum"         % "0.13.0",
+  "org.scalaz"    %% "scalaz-core"               % "7.3.0-M25",
+  "org.scalaz"    %% "scalaz-effect"             % "7.3.0-M25",
+  "org.scalaz"    %% "scalaz-typelevel"          % "7.1.17",
+  "org.scalactic" %% "scalactic"                 % "3.0.5",
+  "eu.timepit"    %% "refined-scalaz"            % "0.9.2",
+  "xyz.driver"    %% "spray-json-derivation"     % "0.7.0",
+  "org.scalatest" %% "scalatest"                 % "3.0.5"    % Test,
+  "org.scalaz"    %% "scalaz-scalacheck-binding" % "7.3.0-M25"   % Test
 )
 
 addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.6")
