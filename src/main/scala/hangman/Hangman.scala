@@ -2,8 +2,8 @@ package hangman
 
 import java.io.IOException
 
-import scalaz.zio.console.{getStrLn, putStrLn}
-import scalaz.zio.{App, IO}
+import scalaz.zio.console._
+import scalaz.zio._
 
 import scala.language.postfixOps
 
@@ -17,10 +17,10 @@ object Hangman extends App {
 
   lazy val Dictionary: List[String] = scala.io.Source.fromResource("words.txt").getLines.toList
 
-  val getName: IO[IOException, String] = putStrLn("What is your name: ") *> getStrLn
-  val getLine: IO[IOException, String] = putStrLn(s"Please enter a letter") *> getStrLn
+  val getName: ZIO[Console, IOException, String] = putStrLn("What is your name: ") *> getStrLn
+  val getLine: ZIO[Console, IOException, String] = putStrLn(s"Please enter a letter") *> getStrLn
 
-  val getChoice : IO[IOException, Char] = for {
+  val getChoice : ZIO[Console, IOException, Char] = for {
     line <- getLine
     char <- line.toLowerCase.trim.headOption match {
       case Some(x) => IO.succeed(x)
@@ -32,7 +32,7 @@ object Hangman extends App {
     rand <- nextInt(Dictionary.length)
   } yield Dictionary lift rand getOrElse "Bug in the program!"
 
-  val hangman : IO[IOException, Unit] = for {
+  val hangman : ZIO[Console, IOException, Unit] = for {
     _ <- putStrLn("Welcome to purely functional hangman")
     name <- getName
     _ <- putStrLn(s"Welcome $name. Let's begin!")
@@ -42,7 +42,7 @@ object Hangman extends App {
     _ <- gameLoop(state)
   } yield()
 
-  def gameLoop(state: State) : IO[IOException, State] = {
+  def gameLoop(state: State) : ZIO[Console, IOException, State] = {
     for {
       guess <- getChoice
       state <- IO.succeed(state.copy(guesses = state.guesses + guess))
@@ -56,9 +56,9 @@ object Hangman extends App {
   }
 
 
-  def nextInt(max: Int) : IO[Nothing, Int] = IO.sync(scala.util.Random.nextInt(max))
+  def nextInt(max: Int) : IO[Nothing, Int] = ??? //IO.sync(scala.util.Random.nextInt(max))
 
-  def renderState(state: State) : IO[IOException, Unit] = {
+  def renderState(state: State) : ZIO[Console, Nothing, Unit] = {
     val word = state.word.toList.map(c =>
       if (state.guesses.contains(c)) s" $c " else " "
     ) mkString
@@ -68,12 +68,11 @@ object Hangman extends App {
     putStrLn(text)
   }
 
-  def run(args: List[String]): IO[Nothing, ExitStatus] = {
-    hangman.redeem(
-      _ => IO.succeed(ExitStatus.ExitNow(1)),
-      _ => IO.succeed(ExitStatus.ExitNow(0))
-    )
+  override def run(args: List[String]): ZIO[Environment, Nothing, Int] = {
+    UIO(1)
+    //hangman.redeem(
+    //  _ => IO.succeed(ExitStatus.ExitNow(1)),
+    //  _ => IO.succeed(ExitStatus.ExitNow(0))
+    //)
   }
-
-
 }
