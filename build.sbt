@@ -19,7 +19,3 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest"                 % "3.0.8"    % Test,
   "org.scalaz"    %% "scalaz-scalacheck-binding" % "7.2.28-scalacheck-1.14"   % Test
 )
-
-addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.10")
-addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full)
-
